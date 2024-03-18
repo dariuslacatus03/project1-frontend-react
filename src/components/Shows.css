@@ -1,0 +1,22 @@
+.anime-operations {
+    margin-left: 5%;
+    width: 65%;
+    text-align: center;
+}
+
+.anime-list {
+    width: 30%;
+    padding-right: 5%;
+    border-right-style: solid;
+    border-color: #646cff;
+}
+
+.list-item-separator {
+    border-color: #646cff;
+}
+
+.shows-top-buttons {
+    position: fixed;
+    margin-left: 10%;
+    margin-right: 10%;
+}

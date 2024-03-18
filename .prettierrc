@@ -9,10 +9,10 @@
     "arrowParens": "always",
     "semi": true,
     "max-line-length": [
-        true,
-        {
-            "limit": 140,
-            "ignore-pattern": "^import |^export {(.*?)}"
-        }
+      true,
+      {
+        "limit": 140,
+        "ignore-pattern": "^import |^export {(.*?)}"
+      }
     ]
-}
+  }
