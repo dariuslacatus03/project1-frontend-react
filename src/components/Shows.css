@@ -1,4 +1,4 @@
-.anime-operations {
+.buttons-actions {
     margin-left: 5%;
     width: 65%;
     text-align: center;
@@ -19,4 +19,18 @@
     position: fixed;
     margin-left: 10%;
     margin-right: 10%;
+    height: 150px;
+}
+
+.action-form {
+    position: fixed;
+    margin-top: 150px;
+    margin-left: 5%;
+    width: 45%;
+
+    text-align: left;
+    border-style: solid;
+    border-radius: 20px;
+
+    padding: 20px;
 }
