@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import AnimeDescription from './components/AnimeDescription';
@@ -9,16 +9,76 @@ import dragonBallCover from './covers/dragon_ball.jpg';
 import hunterHunterCover from './covers/hunter_hunter.jpg';
 import sailorMoonCover from './covers/sailor_moon.jpg';
 
-
 function App() {
-    const [stateAnimeList, setAnimeList] = useState<AnimeProps[]>(animeList);
+    const [stateAnimeList, setAnimeList] = useState<AnimeProps[]>(() => {
+        const savedAnimeList = localStorage.getItem('animeList');
+        return savedAnimeList ? JSON.parse(savedAnimeList) : animeList;
+    });
+
     
+    useEffect(() => {
+        localStorage.setItem('animeList', JSON.stringify(stateAnimeList)); //set JSON to animeList to reset
+    }, [stateAnimeList]);
+    
+    const [showAddForm, setShowAddForm] = useState(false);
+    const [showRemoveForm, setShowRemoveForm] = useState(false);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+
+
+
     return (
         <div>
             <Router>
                 <Routes>
                     <Route path='/' element={<Home />} />
-                    <Route path='/shows' element={<Shows stateAnimeList={stateAnimeList} setAnimeList={setAnimeList} />} />
+                    <Route path='/shows' element={
+                        <Shows 
+                            stateAnimeList={stateAnimeList}
+                            setAnimeList={setAnimeList}
+                            setShowAddForm={setShowAddForm}
+                            setShowRemoveForm={setShowRemoveForm}
+                            setShowUpdateForm={setShowUpdateForm}
+                            showAddForm={showAddForm}
+                            showRemoveForm={showRemoveForm}
+                            showUpdateForm={showUpdateForm} 
+                        />} 
+                    />
+                    <Route path="/shows/update/:id" element={
+                        <Shows 
+                            stateAnimeList={stateAnimeList}
+                            setAnimeList={setAnimeList}
+                            setShowAddForm={setShowAddForm}
+                            setShowRemoveForm={setShowRemoveForm}
+                            setShowUpdateForm={setShowUpdateForm} 
+                            showAddForm={showAddForm}
+                            showRemoveForm={showRemoveForm}
+                            showUpdateForm={showUpdateForm} 
+                        />}
+                    />
+                    <Route path="/shows/remove/:id" element={
+                        <Shows 
+                            stateAnimeList={stateAnimeList}
+                            setAnimeList={setAnimeList}
+                            setShowAddForm={setShowAddForm}
+                            setShowRemoveForm={setShowRemoveForm}
+                            setShowUpdateForm={setShowUpdateForm} 
+                            showAddForm={showAddForm}
+                            showRemoveForm={showRemoveForm}
+                            showUpdateForm={showUpdateForm}
+                        />} 
+                    />
+                    <Route path='/shows/add' element={
+                        <Shows 
+                            stateAnimeList={stateAnimeList}
+                            setAnimeList={setAnimeList}
+                            setShowAddForm={setShowAddForm}
+                            setShowRemoveForm={setShowRemoveForm}
+                            setShowUpdateForm={setShowUpdateForm}
+                            showAddForm={showAddForm}
+                            showRemoveForm={showRemoveForm}
+                            showUpdateForm={showUpdateForm} 
+                        />} 
+                    />
                     <Route path="/shows/:id" element={<AnimeDescription animeList={stateAnimeList}/>} />
                 </Routes>
             </Router>
