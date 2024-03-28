@@ -1,0 +1,11 @@
+.MuiChartsAxis-root .MuiChartsAxis-line {
+    stroke: white;
+}
+  
+& .MuiChartsAxis-tick {
+    stroke: white;
+}
+  
+& .MuiChartsAxis-tickLabel {
+    fill: white;
+}

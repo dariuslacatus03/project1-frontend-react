@@ -6,26 +6,17 @@ export default function Shows(
     {
         stateAnimeList,
         setAnimeList,
-        setShowAddForm,
-        setShowRemoveForm,
-        setShowUpdateForm,
-        showAddForm,
-        showRemoveForm,
-        showUpdateForm
     }: 
         { 
             stateAnimeList: AnimeProps[];
             setAnimeList: Dispatch<SetStateAction<AnimeProps[]>>;
-            setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
-            setShowRemoveForm: React.Dispatch<React.SetStateAction<boolean>>;
-            setShowUpdateForm: React.Dispatch<React.SetStateAction<boolean>>;
-            showAddForm: boolean;
-            showRemoveForm: boolean;
-            showUpdateForm: boolean;
         }){
 
     const [selectedAnime, setSelectedAnime] = useState<AnimeProps | null>(null);
-
+    const [showAddForm, setShowAddForm] = useState(false);
+    const [showRemoveForm, setShowRemoveForm] = useState(false);
+    const [showUpdateForm, setShowUpdateForm] = useState(false);
+    const [showChart, setShowChart] = useState(false);
 
     return (
         <div style={{display: 'flex', width: '100%'}}>
@@ -34,6 +25,7 @@ export default function Shows(
                 setShowAddForm={setShowAddForm}
                 setShowRemoveForm={setShowRemoveForm}
                 setShowUpdateForm={setShowUpdateForm}
+                setShowChart={setShowChart}
                 setSelectedAnime={setSelectedAnime}
             />
             <ButtonActions 
@@ -42,9 +34,11 @@ export default function Shows(
                 setShowAddForm={setShowAddForm}
                 setShowRemoveForm={setShowRemoveForm}
                 setShowUpdateForm={setShowUpdateForm}
+                setShowChart={setShowChart}
                 showAddForm={showAddForm}
                 showRemoveForm={showRemoveForm}
                 showUpdateForm={showUpdateForm}
+                showChart={showChart}
                 selectedAnime={selectedAnime}             
             />            
         </div>

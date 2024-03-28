@@ -2,20 +2,21 @@ import React, { SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimeProps } from './Anime';
 export default function AnimeList(
-    {
-        stateAnimeList,
-        setShowAddForm,
-        setShowRemoveForm,
-        setShowUpdateForm,
-        setSelectedAnime
-    }:
-        { 
-            stateAnimeList: AnimeProps[];
-            setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
-            setShowRemoveForm: React.Dispatch<React.SetStateAction<boolean>>;
-            setShowUpdateForm: React.Dispatch<React.SetStateAction<boolean>>;
-            setSelectedAnime: React.Dispatch<SetStateAction<AnimeProps | null>>;
-        }
+                                {
+                                    stateAnimeList,
+                                    setShowAddForm,
+                                    setShowRemoveForm,
+                                    setShowUpdateForm,
+                                    setShowChart,
+                                    setSelectedAnime
+                                }:{ 
+                                    stateAnimeList: AnimeProps[];
+                                    setShowAddForm: React.Dispatch<React.SetStateAction<boolean>>;
+                                    setShowRemoveForm: React.Dispatch<React.SetStateAction<boolean>>;
+                                    setShowUpdateForm: React.Dispatch<React.SetStateAction<boolean>>;
+                                    setShowChart : React.Dispatch<React.SetStateAction<boolean>>;
+                                    setSelectedAnime: React.Dispatch<SetStateAction<AnimeProps | null>>;
+                                }
 ){
 
     const handleRemoveClick = (id : number) => {
@@ -27,6 +28,7 @@ export default function AnimeList(
         setSelectedAnime(selectedAnime)
         setShowAddForm(false);
         setShowUpdateForm(false);
+        setShowChart(false);
         setShowRemoveForm(true);
       };
 
@@ -38,6 +40,7 @@ export default function AnimeList(
         setSelectedAnime(selectedAnime)
         setShowAddForm(false);
         setShowRemoveForm(false);
+        setShowChart(false);
         setShowUpdateForm(true);
       };
 
@@ -45,10 +48,11 @@ export default function AnimeList(
             <div className='anime-list'>
                 <ul style={{listStyle:"none"}}>
                     {stateAnimeList.map(anime => (
-                                <li key={anime.id}>
+                                <li data-testid={"list-item"} key={anime.id}>
                                     <Link to={`/shows/${anime.id}`} style={{display:"block"}}>
                                         <h2>Name: {anime.name}</h2>
-                                        <img src={anime.cover} width={192} height={256} alt={anime.name} />
+                                        <h3>Episodes: {anime.nrOfEpisodes}</h3>
+                                        {/* <img src={anime.cover} width={192} height={256} alt={anime.name} /> */}
                                     </Link>
                                     <Link to={`/shows/remove/${anime.id}`} onClick={() => handleRemoveClick(anime.id)}>
                                         <button style={{display:"inline"}}>Remove</button>

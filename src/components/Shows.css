@@ -42,12 +42,12 @@
     position: fixed;
     margin-left: 10%;
     margin-right: 10%;
-    height: 150px;
+    height: 200px;
 }
 
 .action-form {
     position: fixed;
-    margin-top: 150px;
+    margin-top: 200px;
     margin-left: 5%;
     width: 45%;
 
@@ -58,3 +58,7 @@
     padding: 20px;
 }
 
+.my-chart {
+    border-style: none;
+
+}

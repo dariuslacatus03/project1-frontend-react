@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import AnimeDescription from './components/AnimeDescription';
@@ -10,21 +10,8 @@ import hunterHunterCover from './covers/hunter_hunter.jpg';
 import sailorMoonCover from './covers/sailor_moon.jpg';
 
 function App() {
-    const [stateAnimeList, setAnimeList] = useState<AnimeProps[]>(() => {
-        const savedAnimeList = localStorage.getItem('animeList');
-        return savedAnimeList ? JSON.parse(savedAnimeList) : animeList;
-    });
-
+    const [stateAnimeList, setAnimeList] = useState<AnimeProps[]>(animeList);
     
-    useEffect(() => {
-        localStorage.setItem('animeList', JSON.stringify(stateAnimeList)); //set JSON to animeList to reset
-    }, [stateAnimeList]);
-    
-    const [showAddForm, setShowAddForm] = useState(false);
-    const [showRemoveForm, setShowRemoveForm] = useState(false);
-    const [showUpdateForm, setShowUpdateForm] = useState(false);
-
-
 
     return (
         <div>
@@ -35,48 +22,42 @@ function App() {
                         <Shows 
                             stateAnimeList={stateAnimeList}
                             setAnimeList={setAnimeList}
-                            setShowAddForm={setShowAddForm}
-                            setShowRemoveForm={setShowRemoveForm}
-                            setShowUpdateForm={setShowUpdateForm}
-                            showAddForm={showAddForm}
-                            showRemoveForm={showRemoveForm}
-                            showUpdateForm={showUpdateForm} 
+                        />} 
+                    />
+                    <Route path='/shows/sorted-asc' element={
+                        <Shows 
+                            stateAnimeList={stateAnimeList}
+                            setAnimeList={setAnimeList}
+                        />} 
+                    />
+                    <Route path='/shows/sorted-desc' element={
+                        <Shows 
+                            stateAnimeList={stateAnimeList}
+                            setAnimeList={setAnimeList} 
                         />} 
                     />
                     <Route path="/shows/update/:id" element={
                         <Shows 
                             stateAnimeList={stateAnimeList}
-                            setAnimeList={setAnimeList}
-                            setShowAddForm={setShowAddForm}
-                            setShowRemoveForm={setShowRemoveForm}
-                            setShowUpdateForm={setShowUpdateForm} 
-                            showAddForm={showAddForm}
-                            showRemoveForm={showRemoveForm}
-                            showUpdateForm={showUpdateForm} 
+                            setAnimeList={setAnimeList} 
                         />}
                     />
                     <Route path="/shows/remove/:id" element={
                         <Shows 
                             stateAnimeList={stateAnimeList}
                             setAnimeList={setAnimeList}
-                            setShowAddForm={setShowAddForm}
-                            setShowRemoveForm={setShowRemoveForm}
-                            setShowUpdateForm={setShowUpdateForm} 
-                            showAddForm={showAddForm}
-                            showRemoveForm={showRemoveForm}
-                            showUpdateForm={showUpdateForm}
                         />} 
                     />
                     <Route path='/shows/add' element={
                         <Shows 
                             stateAnimeList={stateAnimeList}
-                            setAnimeList={setAnimeList}
-                            setShowAddForm={setShowAddForm}
-                            setShowRemoveForm={setShowRemoveForm}
-                            setShowUpdateForm={setShowUpdateForm}
-                            showAddForm={showAddForm}
-                            showRemoveForm={showRemoveForm}
-                            showUpdateForm={showUpdateForm} 
+                            setAnimeList={setAnimeList} 
+                        />} 
+                    />
+                    <Route path='/shows/see-chart' element={
+                        <Shows
+                            stateAnimeList={stateAnimeList}
+                            setAnimeList={setAnimeList} 
                         />} 
                     />
                     <Route path="/shows/:id" element={<AnimeDescription animeList={stateAnimeList}/>} />
@@ -88,7 +69,7 @@ function App() {
 
 export default App;
 
-const animeList = [
+export const animeList = [
     {
         id: 1,
         name: 'Dragon Ball',
@@ -102,7 +83,7 @@ const animeList = [
         name: 'Hunter x Hunter',
         cover: hunterHunterCover,
         nrOfEpisodes: 120,
-        genre: 'Action',
+        genre: 'Adventure',
         description: 'This is the description of Hunter x Hunter'
     },
     {
@@ -112,6 +93,70 @@ const animeList = [
         nrOfEpisodes: 250,
         genre: 'Shojo',
         description: 'This is the description of Sailor Moon'
+    },
+    {
+        id: 4,
+        name: 'Dragon Ball Z',
+        cover: 'none',
+        nrOfEpisodes: 291,
+        genre: 'Action',
+        description: 'This is the description of Dragon Ball Z'
+    },
+    {
+        id: 5,
+        name: 'One Piece',
+        cover: 'none',
+        nrOfEpisodes: 1098,
+        genre: 'Adventure',
+        description: 'This is the description of One Piece'
+    },
+    {
+        id: 6,
+        name: 'Jojo\'s Bizzare Adventure',
+        cover: 'none',
+        nrOfEpisodes: 190,
+        genre: 'Adventure',
+        description: 'This is the description of Jojo\'s Bizzare Adventure'
+    },
+    {
+        id: 7,
+        name: 'Baki',
+        cover: 'none',
+        nrOfEpisodes: 40,
+        genre: 'Action',
+        description: 'This is the description of Baki'
+    },
+    {
+        id: 8,
+        name: 'One Punch Man',
+        cover: 'none',
+        nrOfEpisodes: 24,
+        genre: 'Comedy',
+        description: 'This is the description of One Punch Man'
+    },
+    {
+        id: 9,
+        name: 'Spy x Family',
+        cover: 'none',
+        nrOfEpisodes: 37,
+        genre: 'Comedy',
+        description: 'This is the description of Spy x Family'
+    },
+    {
+        id: 10,
+        name: 'Dragon Ball Super',
+        cover: 'none',
+        nrOfEpisodes: 131,
+        genre: 'Action',
+        description: 'This is the description of Dragon Ball Super'
+    },
+    {
+        id: 11,
+        name: 'Dragon Ball GT',
+        cover: 'none',
+        nrOfEpisodes: 64,
+        genre: 'Action',
+        description: 'This is the description of Dragon Ball GT'
     }
 ];
 

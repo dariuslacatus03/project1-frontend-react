@@ -1,6 +1,13 @@
 import { useParams } from 'react-router-dom';
 import Anime, { AnimeProps } from './model/Anime';
-function AnimeDescription({ animeList }: { animeList: AnimeProps[] }) {
+
+function AnimeDescription(
+                        { 
+                          animeList 
+                        }:{ 
+                          animeList: AnimeProps[] 
+                        }
+){
   const params = useParams();
 
   const idString = params.id;
@@ -18,7 +25,7 @@ function AnimeDescription({ animeList }: { animeList: AnimeProps[] }) {
       <Anime 
         id={chosenAnime.id}
         name={chosenAnime.name}
-        cover={chosenAnime.cover}
+        // cover={chosenAnime.cover}
         nrOfEpisodes={chosenAnime.nrOfEpisodes}
         genre={chosenAnime.genre}
         description={chosenAnime.description}
