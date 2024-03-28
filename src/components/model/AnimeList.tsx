@@ -1,4 +1,5 @@
-import React, { SetStateAction } from 'react';
+import { Pagination, Stack } from '@mui/material';
+import React, { SetStateAction, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimeProps } from './Anime';
 export default function AnimeList(
@@ -18,6 +19,17 @@ export default function AnimeList(
                                     setSelectedAnime: React.Dispatch<SetStateAction<AnimeProps | null>>;
                                 }
 ){
+
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 3;
+
+    // Calculate total number of pages
+    const totalPages = Math.ceil(stateAnimeList.length / itemsPerPage);
+
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = page * itemsPerPage;
+
+    const paginatedAnimeList = stateAnimeList.slice(startIndex, endIndex);
 
     const handleRemoveClick = (id : number) => {
         
@@ -44,10 +56,12 @@ export default function AnimeList(
         setShowUpdateForm(true);
       };
 
+
+
     return (
             <div className='anime-list'>
                 <ul style={{listStyle:"none"}}>
-                    {stateAnimeList.map(anime => (
+                    {paginatedAnimeList.map(anime => (
                                 <li data-testid={"list-item"} key={anime.id}>
                                     <Link to={`/shows/${anime.id}`} style={{display:"block"}}>
                                         <h2>Name: {anime.name}</h2>
@@ -64,6 +78,19 @@ export default function AnimeList(
                                 </li>
                     ))}
                 </ul>
+                <Stack spacing={2} direction="row" justifyContent="center">
+                    <Pagination
+                    sx={{
+                        '.MuiPaginationItem-root':{
+                            color: 'white',
+                        }
+                    }}
+                    count={totalPages}
+                    page={page}
+                    size='medium'
+                    onChange={(event, value) => setPage(value)}
+                    />
+                </Stack>
             </div>
         
 )}

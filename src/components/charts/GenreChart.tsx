@@ -1,6 +1,5 @@
 import { BarChart } from "@mui/x-charts";
 import { AnimeProps } from "../model/Anime";
-import "./GenreCharts.css";
 
 export default function GenreChart(
                                 {
@@ -43,8 +42,8 @@ export default function GenreChart(
                 },
               ]}
               
-              width={500}
-              height={300}
+              width={700}
+              height={400}
 
             />
           </div>

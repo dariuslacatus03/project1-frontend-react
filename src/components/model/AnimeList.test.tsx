@@ -11,5 +11,5 @@ import AnimeList from './AnimeList'
             setShowUpdateForm={() => vi.fn()}
             setShowChart={() => vi.fn()}
             setSelectedAnime={() => vi.fn()}/></BrowserRouter>)
-        expect(screen.queryAllByTestId("list-item").length).toBe(3);
+        expect(screen.queryAllByTestId("list-item").length).toBe(11);
     })
