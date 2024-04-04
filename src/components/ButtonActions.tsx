@@ -35,7 +35,7 @@ export default function ButtonActions(
 ){ 
   const toBeCompletedAnime : AnimeProps = {
     id: -1,
-    name: '',
+    animeName: '',
     // cover: '',
     nrOfEpisodes: -1,
     genre: '',
@@ -47,7 +47,7 @@ export default function ButtonActions(
 
 
   const handleAddClick = () => {
-    setNewAnime({...newAnime, id: stateAnimeList[stateAnimeList.length-1].id+1});
+    //setNewAnime({...newAnime, id: stateAnimeList[stateAnimeList.length-1].id+1});
 
     setShowRemoveForm(false);
     setShowUpdateForm(false);
@@ -111,6 +111,7 @@ export default function ButtonActions(
             selectedAnime={selectedAnime}
             newAnime={newAnime}
             setNewAnime={setNewAnime}
+            setAnimeList={setAnimeList}
             stateAnimeList={stateAnimeList}
             setShowUpdateForm={setShowUpdateForm}
             toBeCompletedAnime={toBeCompletedAnime}

@@ -1,6 +1,7 @@
-import { Pagination, Stack } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Pagination, Select, Stack } from '@mui/material';
 import React, { SetStateAction, useState } from 'react';
 import { Link } from 'react-router-dom';
+import AnimeService from '../../service/AnimeService';
 import { AnimeProps } from './Anime';
 export default function AnimeList(
                                 {
@@ -21,9 +22,8 @@ export default function AnimeList(
 ){
 
     const [page, setPage] = useState(1);
-    const itemsPerPage = 3;
+    const [itemsPerPage, setItemsPerPage] = useState(3);
 
-    // Calculate total number of pages
     const totalPages = Math.ceil(stateAnimeList.length / itemsPerPage);
 
     const startIndex = (page - 1) * itemsPerPage;
@@ -31,29 +31,44 @@ export default function AnimeList(
 
     const paginatedAnimeList = stateAnimeList.slice(startIndex, endIndex);
 
-    const handleRemoveClick = (id : number) => {
+    const handleRemoveClick = async (id : number) => {
         
-        const selectedAnime = stateAnimeList.find(anime => anime.id === id)
-        if (!selectedAnime){
-            return;
+        // const selectedAnime = stateAnimeList.find(anime => anime.id === id)
+        try{
+            const selectedAnime : AnimeProps = await AnimeService.getAnimeById(id)
+            if (!selectedAnime){
+                return;
+            }
+            setSelectedAnime(selectedAnime)
+            setShowAddForm(false);
+            setShowUpdateForm(false);
+            setShowChart(false);
+            setShowRemoveForm(true);
         }
-        setSelectedAnime(selectedAnime)
-        setShowAddForm(false);
-        setShowUpdateForm(false);
-        setShowChart(false);
-        setShowRemoveForm(true);
+        catch (error)
+        {
+            console.log(error)
+        }
       };
 
-      const handleUpdateClick = (id : number) => {
-        const selectedAnime = stateAnimeList.find(anime => anime.id === id)
-        if (!selectedAnime){
-            return;
+      const handleUpdateClick = async (id : number) => {
+        // const selectedAnime = stateAnimeList.find(anime => anime.id === id)
+        // if (!selectedAnime){
+        //     return;
+        // }
+        
+        try {
+            const selectedAnime : AnimeProps = await AnimeService.getAnimeById(id)
+            setSelectedAnime(selectedAnime)
+            setShowAddForm(false);
+            setShowRemoveForm(false);
+            setShowChart(false);
+            setShowUpdateForm(true);
         }
-        setSelectedAnime(selectedAnime)
-        setShowAddForm(false);
-        setShowRemoveForm(false);
-        setShowChart(false);
-        setShowUpdateForm(true);
+        catch(error)
+        {
+            console.log(error)
+        }
       };
 
 
@@ -64,7 +79,7 @@ export default function AnimeList(
                     {paginatedAnimeList.map(anime => (
                                 <li data-testid={"list-item"} key={anime.id}>
                                     <Link to={`/shows/${anime.id}`} style={{display:"block"}}>
-                                        <h2>Name: {anime.name}</h2>
+                                        <h2>Name: {anime.animeName}</h2>
                                         <h3>Episodes: {anime.nrOfEpisodes}</h3>
                                         {/* <img src={anime.cover} width={192} height={256} alt={anime.name} /> */}
                                     </Link>
@@ -91,6 +106,24 @@ export default function AnimeList(
                     onChange={(event, value) => setPage(value)}
                     />
                 </Stack>
+                <FormControl>
+                    <InputLabel id="select-shows-per-page">Shows per page</InputLabel>
+                        <Select
+                            sx={{
+                                '.MuiFormLabel-root .MuiInputLabel-root':{
+                                    color: 'white',
+                                }
+                            }}
+                            labelId="select-shows-per-pate"
+                            id="shows-per-page"
+                            value={itemsPerPage}
+                            label="Shows per page"
+                            onChange={(event) => setItemsPerPage(Number(event.target.value))}
+                        >
+                            <MenuItem value={3}>3</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                        </Select>
+                </FormControl>
             </div>
         
 )}

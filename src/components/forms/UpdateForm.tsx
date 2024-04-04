@@ -1,3 +1,4 @@
+import AnimeService from "../../service/AnimeService";
 import { AnimeProps } from "../model/Anime";
 
 export default function UpdateForm(
@@ -7,6 +8,7 @@ export default function UpdateForm(
                                     selectedAnime,
                                     newAnime,
                                     setNewAnime,
+                                    setAnimeList,
                                     stateAnimeList,
                                     setShowUpdateForm,
                                     toBeCompletedAnime
@@ -16,6 +18,7 @@ export default function UpdateForm(
                                     selectedAnime : AnimeProps | null,
                                     newAnime : AnimeProps,
                                     setNewAnime : React.Dispatch<React.SetStateAction<AnimeProps>>,
+                                    setAnimeList : React.Dispatch<React.SetStateAction<AnimeProps[]>>,
                                     stateAnimeList : AnimeProps[],
                                     setShowUpdateForm : React.Dispatch<React.SetStateAction<boolean>>,
                                     toBeCompletedAnime : AnimeProps
@@ -27,25 +30,32 @@ export default function UpdateForm(
         {
           return;
         } 
-        const animeToUpdate = stateAnimeList.find(anime => anime.id === selectedAnime.id)
-        if (animeToUpdate) {
+        // const animeToUpdate = stateAnimeList.find(anime => anime.id === selectedAnime.id)
+         if (selectedAnime) {
           
-          if (newAnime.name) {
-            animeToUpdate.name = newAnime.name;
+          if (newAnime.animeName) {
+            selectedAnime.animeName = newAnime.animeName;
           }
           // if (newAnime.cover) {
           //   animeToUpdate.cover = newAnime.cover;
           // } 
           if (newAnime.description) {
-            animeToUpdate.description = newAnime.description;
+            selectedAnime.description = newAnime.description;
           }
           if (newAnime.genre) {
-            animeToUpdate.genre = newAnime.genre;
+            selectedAnime.genre = newAnime.genre;
           } 
           if (newAnime.nrOfEpisodes != -1) {
-            animeToUpdate.nrOfEpisodes = newAnime.nrOfEpisodes
+            selectedAnime.nrOfEpisodes = newAnime.nrOfEpisodes
           }
           
+          AnimeService.updateAnime(selectedAnime).then(() => {
+            AnimeService.getAnimes().then((data) => {
+              setAnimeList(data)
+            })
+          })
+
+
           setShowUpdateForm(false);
           setNewAnime(toBeCompletedAnime);
           setErrorMessage('');
@@ -54,7 +64,7 @@ export default function UpdateForm(
 
     return (
         <div className='action-form'>
-          <h2>Update the details of {selectedAnime ? selectedAnime.name : "ERROR"}:</h2>
+          <h2>Update the details of {selectedAnime ? selectedAnime.animeName : "ERROR"}:</h2>
           <p>Note: it is not mandatory to update all the fields</p>
           {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
 
@@ -64,7 +74,7 @@ export default function UpdateForm(
               id="anime-name" 
               placeholder="Anime Name"
               onChange={
-                e => setNewAnime({ ...newAnime, name: e.target.value })
+                e => setNewAnime({ ...newAnime, animeName: e.target.value })
               } 
           />
           <br /><br />

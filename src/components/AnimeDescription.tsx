@@ -24,7 +24,7 @@ function AnimeDescription(
       <h2>Anime Description</h2>
       <Anime 
         id={chosenAnime.id}
-        name={chosenAnime.name}
+        animeName={chosenAnime.animeName}
         // cover={chosenAnime.cover}
         nrOfEpisodes={chosenAnime.nrOfEpisodes}
         genre={chosenAnime.genre}

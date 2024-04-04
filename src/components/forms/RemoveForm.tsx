@@ -1,3 +1,4 @@
+import AnimeService from "../../service/AnimeService";
 import { AnimeProps } from "../model/Anime";
 
 export default function RemoveForm(
@@ -19,13 +20,18 @@ export default function RemoveForm(
         {
           return;
         }  
-        setAnimeList(stateAnimeList.filter(anime => anime.id !== selectedAnime.id))
+        // setAnimeList(stateAnimeList.filter(anime => anime.id !== selectedAnime.id))
+        AnimeService.deleteAnime(selectedAnime.id).then(() => {
+          AnimeService.getAnimes().then((data) => {
+            setAnimeList(data)
+          }).catch((error) => console.log(error))
+        }).catch((error) => console.log(error))
         setShowRemoveForm(false);
       };
 
     return (
         <div className='action-form'>
-          <h2>Are you sure you want to remove {selectedAnime ? selectedAnime.name : "ERROR"}?</h2>
+          <h2>Are you sure you want to remove {selectedAnime ? selectedAnime.animeName : "ERROR"}?</h2>
           <p>If yes, confirm below</p>
           <button onClick={handleRemoveSendClick}>Confirm</button>
         </div>

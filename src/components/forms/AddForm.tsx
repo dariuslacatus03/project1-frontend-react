@@ -1,3 +1,5 @@
+import { AxiosError } from "axios";
+import AnimeService from "../../service/AnimeService";
 import { AnimeProps } from "../model/Anime";
 
 
@@ -23,11 +25,16 @@ export default function AddForm({
 ){
 
     const handleAddSendClick = () => {
-        if (!newAnime.name || !newAnime.description || !newAnime.genre || newAnime.nrOfEpisodes === -1) {
+        if (!newAnime.animeName || !newAnime.description || !newAnime.genre || newAnime.nrOfEpisodes === -1) {
           setErrorMessage('Please provide all the required information');
           return;
         }
-        setAnimeList([...stateAnimeList, newAnime]);
+        AnimeService.addAnime(newAnime).then(() => {
+          AnimeService.getAnimes().then((data) => {
+            setAnimeList(data)
+          }).catch((error) => {console.log(error as AxiosError)})
+        }).catch((error) => console.log(error as AxiosError))
+
         setShowAddForm(false);
         setNewAnime(toBeCompletedAnime);
         setErrorMessage('');
@@ -38,7 +45,7 @@ export default function AddForm({
             <h2>Add a new anime:</h2>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
             <label htmlFor='anime-name'>Anime name: </label>
-            <input type="text" id="anime-name" placeholder="Anime Name" onChange={e => setNewAnime({ ...newAnime, name: e.target.value })} /><br /><br />
+            <input type="text" id="anime-name" placeholder="Anime Name" onChange={e => setNewAnime({ ...newAnime, animeName: e.target.value })} /><br /><br />
             {/* <label htmlFor='anime-cover'>Anime cover: </label>
             <input type="file" id="anime-cover" onChange={e => {
               const files = e.target.files;

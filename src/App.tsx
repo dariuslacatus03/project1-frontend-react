@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import AnimeDescription from './components/AnimeDescription';
@@ -8,10 +8,21 @@ import { AnimeProps } from './components/model/Anime';
 import dragonBallCover from './covers/dragon_ball.jpg';
 import hunterHunterCover from './covers/hunter_hunter.jpg';
 import sailorMoonCover from './covers/sailor_moon.jpg';
+import AnimeService from './service/AnimeService';
+
+
 
 function App() {
-    const [stateAnimeList, setAnimeList] = useState<AnimeProps[]>(animeList);
+    const [stateAnimeList, setAnimeList] = useState<AnimeProps[]>([]);
     
+    useEffect(() => {
+        AnimeService.getAnimes().then((data) => {
+            setAnimeList(data)
+
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
 
     return (
         <div>
@@ -157,6 +168,14 @@ export const animeList = [
         nrOfEpisodes: 64,
         genre: 'Action',
         description: 'This is the description of Dragon Ball GT'
+    },
+    {
+        id: 12,
+        name: 'Jujutsu Kaisen',
+        cover: 'none',
+        nrOfEpisodes: 70,
+        genre: 'Action',
+        description: 'This is the description of Jujutsu Kaisen'
     }
 ];
 
