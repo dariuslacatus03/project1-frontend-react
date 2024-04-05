@@ -18,7 +18,6 @@ export default function ButtonActions(
                                       showRemoveForm,
                                       showUpdateForm,
                                       showChart,
-                                      selectedAnime
                                     }:{ 
                                       stateAnimeList: AnimeProps[];
                                       setAnimeList : Dispatch<SetStateAction<AnimeProps[]>>;
@@ -30,7 +29,6 @@ export default function ButtonActions(
                                       showRemoveForm: boolean;
                                       showUpdateForm: boolean;
                                       showChart: boolean;
-                                      selectedAnime: AnimeProps | null;   
                                     }
 ){ 
   const toBeCompletedAnime : AnimeProps = {
@@ -98,7 +96,6 @@ export default function ButtonActions(
       )}
       {showRemoveForm && (
           <RemoveForm 
-            selectedAnime={selectedAnime}
             stateAnimeList={stateAnimeList}
             setAnimeList={setAnimeList}
             setShowRemoveForm={setShowRemoveForm}
@@ -108,7 +105,6 @@ export default function ButtonActions(
           <UpdateForm 
             errorMessage={errorMessage}
             setErrorMessage={setErrorMessage}
-            selectedAnime={selectedAnime}
             newAnime={newAnime}
             setNewAnime={setNewAnime}
             setAnimeList={setAnimeList}

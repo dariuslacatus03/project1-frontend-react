@@ -12,7 +12,6 @@ export default function Shows(
             setAnimeList: Dispatch<SetStateAction<AnimeProps[]>>;
         }){
 
-    const [selectedAnime, setSelectedAnime] = useState<AnimeProps | null>(null);
     const [showAddForm, setShowAddForm] = useState(false);
     const [showRemoveForm, setShowRemoveForm] = useState(false);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -26,7 +25,6 @@ export default function Shows(
                 setShowRemoveForm={setShowRemoveForm}
                 setShowUpdateForm={setShowUpdateForm}
                 setShowChart={setShowChart}
-                setSelectedAnime={setSelectedAnime}
             />
             <ButtonActions 
                 stateAnimeList={stateAnimeList}
@@ -39,7 +37,6 @@ export default function Shows(
                 showRemoveForm={showRemoveForm}
                 showUpdateForm={showUpdateForm}
                 showChart={showChart}
-                selectedAnime={selectedAnime}             
             />            
         </div>
     );

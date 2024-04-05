@@ -17,6 +17,7 @@ function App() {
     
     useEffect(() => {
         AnimeService.getAnimes().then((data) => {
+            console.log(data)
             setAnimeList(data)
 
         }).catch((error) => {

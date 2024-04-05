@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import AnimeService from "../../service/AnimeService";
 import { AnimeProps } from "../model/Anime";
 
@@ -5,7 +6,6 @@ export default function UpdateForm(
                                 {
                                     errorMessage,
                                     setErrorMessage,
-                                    selectedAnime,
                                     newAnime,
                                     setNewAnime,
                                     setAnimeList,
@@ -15,7 +15,6 @@ export default function UpdateForm(
                                 }:{
                                     errorMessage : string,
                                     setErrorMessage : React.Dispatch<React.SetStateAction<string>>,
-                                    selectedAnime : AnimeProps | null,
                                     newAnime : AnimeProps,
                                     setNewAnime : React.Dispatch<React.SetStateAction<AnimeProps>>,
                                     setAnimeList : React.Dispatch<React.SetStateAction<AnimeProps[]>>,
@@ -25,46 +24,51 @@ export default function UpdateForm(
                                 }
 ){
 
+    const params = useParams();
+
+    const idString = params.id;
+    const id = idString ? parseInt(idString, 10) : undefined;
+
+    const chosenAnime = stateAnimeList.find(anime => anime.id === id) 
+    ? stateAnimeList.find(anime => anime.id === id) : undefined;
+
     const handleUpdateSendClick = () => {
-        if (!selectedAnime)
+        if (!chosenAnime)
         {
           return;
         } 
-        // const animeToUpdate = stateAnimeList.find(anime => anime.id === selectedAnime.id)
-         if (selectedAnime) {
-          
-          if (newAnime.animeName) {
-            selectedAnime.animeName = newAnime.animeName;
-          }
-          // if (newAnime.cover) {
-          //   animeToUpdate.cover = newAnime.cover;
-          // } 
-          if (newAnime.description) {
-            selectedAnime.description = newAnime.description;
-          }
-          if (newAnime.genre) {
-            selectedAnime.genre = newAnime.genre;
-          } 
-          if (newAnime.nrOfEpisodes != -1) {
-            selectedAnime.nrOfEpisodes = newAnime.nrOfEpisodes
-          }
-          
-          AnimeService.updateAnime(selectedAnime).then(() => {
-            AnimeService.getAnimes().then((data) => {
-              setAnimeList(data)
-            })
-          })
 
-
-          setShowUpdateForm(false);
-          setNewAnime(toBeCompletedAnime);
-          setErrorMessage('');
+        if (newAnime.animeName) {
+          chosenAnime.animeName = newAnime.animeName;
         }
+        // if (newAnime.cover) {
+        //   animeToUpdate.cover = newAnime.cover;
+        // } 
+        if (newAnime.description) {
+          chosenAnime.description = newAnime.description;
+        }
+        if (newAnime.genre) {
+          chosenAnime.genre = newAnime.genre;
+        } 
+        if (newAnime.nrOfEpisodes != -1) {
+          chosenAnime.nrOfEpisodes = newAnime.nrOfEpisodes
+        }
+        
+        AnimeService.updateAnime(chosenAnime).then(() => {
+          AnimeService.getAnimes().then((data) => {
+            setAnimeList(data)
+          }).catch((error) => console.log(error))
+        }).catch((error) => console.log(error))
+
+
+        setShowUpdateForm(false);
+        setNewAnime(toBeCompletedAnime);
+        setErrorMessage('');
     };
 
     return (
         <div className='action-form'>
-          <h2>Update the details of {selectedAnime ? selectedAnime.animeName : "ERROR"}:</h2>
+          <h2>Update the details of {chosenAnime ? chosenAnime.animeName : "ERROR"}:</h2>
           <p>Note: it is not mandatory to update all the fields</p>
           {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
 
