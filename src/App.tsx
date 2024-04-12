@@ -18,18 +18,18 @@ function App() {
     const [stateAnimeList, setAnimeList] = useState<AnimeProps[]>([]);
     
     useEffect(() => {
-        const handleOnline = () => setIsOnline(true);
-        const handleOffline = () => setIsOnline(false);
-    
-        window.addEventListener('online', handleOnline);
-        window.addEventListener('offline', handleOffline);
-    
-        console.log("SALUT");
-    
-        return () => {
-            window.removeEventListener('online', handleOnline);
-            window.removeEventListener('offline', handleOffline);
-        };
+        setInterval(() => {
+            fetch('//google.com', {
+                mode: 'no-cors',
+            })
+            .then(() => {
+                setIsOnline(true)
+            })
+            .catch(() => {
+                setIsOnline(false)
+            })
+        }, 2000)
+        console.log(isOnline);
     }, []);
     
     useEffect(() => {
