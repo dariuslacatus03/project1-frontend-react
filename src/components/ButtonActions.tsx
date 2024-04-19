@@ -5,6 +5,7 @@ import AddForm from './forms/AddForm';
 import RemoveForm from './forms/RemoveForm';
 import UpdateForm from './forms/UpdateForm';
 import { AnimeProps } from './model/Anime';
+import { UserProps } from './model/User';
 
 export default function ButtonActions(
                                     { 
@@ -18,6 +19,7 @@ export default function ButtonActions(
                                       showRemoveForm,
                                       showUpdateForm,
                                       showChart,
+                                      currUser
                                     }:{ 
                                       stateAnimeList: AnimeProps[];
                                       setAnimeList : Dispatch<SetStateAction<AnimeProps[]>>;
@@ -29,6 +31,7 @@ export default function ButtonActions(
                                       showRemoveForm: boolean;
                                       showUpdateForm: boolean;
                                       showChart: boolean;
+                                      currUser: UserProps | null;
                                     }
 ){ 
   const toBeCompletedAnime : AnimeProps = {
@@ -37,7 +40,11 @@ export default function ButtonActions(
     // cover: '',
     nrOfEpisodes: -1,
     genre: '',
-    description: ''
+    description: '',
+    user: {
+      id: -1,
+      userName: ''
+    }
 }
   const [newAnime, setNewAnime] = useState<AnimeProps>(toBeCompletedAnime);
   const [errorMessage, setErrorMessage] = useState('');
@@ -92,6 +99,7 @@ export default function ButtonActions(
           setAnimeList={setAnimeList}
           setShowAddForm={setShowAddForm}
           toBeCompletedAnime={toBeCompletedAnime}
+          currUser = {currUser}
         />
       )}
       {showRemoveForm && (

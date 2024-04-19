@@ -7,6 +7,7 @@ import AnimeDescription from './components/AnimeDescription';
 import Home from './components/Home';
 import Shows from './components/Shows';
 import { AnimeProps } from './components/model/Anime';
+import { UserProps } from './components/model/User';
 import AnimeService from './service/AnimeService';
 import checkServerStatus from './service/HealthCheckService';
 
@@ -16,21 +17,22 @@ function App() {
     const [isServerUp, setIsServerUp] = useState<boolean | null>(null);
     const [isOnline, setIsOnline] = useState<boolean>(true);
     const [stateAnimeList, setAnimeList] = useState<AnimeProps[]>([]);
+    const [user, setUser] = useState<UserProps | null>(null);
+
     
-    useEffect(() => {
-        setInterval(() => {
-            fetch('//google.com', {
-                mode: 'no-cors',
-            })
-            .then(() => {
-                setIsOnline(true)
-            })
-            .catch(() => {
-                setIsOnline(false)
-            })
-        }, 2000)
-        console.log(isOnline);
-    }, []);
+    // useEffect(() => {
+    //     setInterval(() => {
+    //         fetch('//google.com', {
+    //             mode: 'no-cors',
+    //         })
+    //         .then(() => {
+    //             setIsOnline(true)
+    //         })
+    //         .catch(() => {
+    //             setIsOnline(false)
+    //         })
+    //     }, 2000)
+    // }, []);
     
     useEffect(() => {
         
@@ -80,47 +82,58 @@ function App() {
             <div>
                 <Router>
                     <Routes>
-                        <Route path='/' element={<Home />} />
+                        <Route path='/' element={
+                            <Home
+                                setUser = {setUser}
+                            />}
+                         />
                         <Route path='/shows' element={
                             <Shows 
                                 stateAnimeList={stateAnimeList}
                                 setAnimeList={setAnimeList}
+                                currUser = {user}
                             />} 
                         />
                         <Route path='/shows/sorted-asc' element={
                             <Shows 
                                 stateAnimeList={stateAnimeList}
                                 setAnimeList={setAnimeList}
+                                currUser = {user}
                             />} 
                         />
                         <Route path='/shows/sorted-desc' element={
                             <Shows 
                                 stateAnimeList={stateAnimeList}
                                 setAnimeList={setAnimeList} 
+                                currUser = {user}
                             />} 
                         />
                         <Route path="/shows/update/:id" element={
                             <Shows 
                                 stateAnimeList={stateAnimeList}
                                 setAnimeList={setAnimeList} 
+                                currUser = {user}
                             />}
                         />
                         <Route path="/shows/remove/:id" element={
                             <Shows 
                                 stateAnimeList={stateAnimeList}
                                 setAnimeList={setAnimeList}
+                                currUser = {user}
                             />} 
                         />
                         <Route path='/shows/add' element={
                             <Shows 
                                 stateAnimeList={stateAnimeList}
                                 setAnimeList={setAnimeList} 
+                                currUser = {user}
                             />} 
                         />
                         <Route path='/shows/see-chart' element={
                             <Shows
                                 stateAnimeList={stateAnimeList}
                                 setAnimeList={setAnimeList} 
+                                currUser = {user}
                             />} 
                         />
                         <Route path="/shows/:id" element={<AnimeDescription animeList={stateAnimeList}/>} />

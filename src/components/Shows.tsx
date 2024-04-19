@@ -2,15 +2,18 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import ButtonActions from './ButtonActions';
 import { AnimeProps } from './model/Anime';
 import AnimeList from './model/AnimeList';
+import { UserProps } from './model/User';
 export default function Shows(
-    {
-        stateAnimeList,
-        setAnimeList,
-    }: 
-        { 
-            stateAnimeList: AnimeProps[];
-            setAnimeList: Dispatch<SetStateAction<AnimeProps[]>>;
-        }){
+                            {
+                                stateAnimeList,
+                                setAnimeList,
+                                currUser
+                            }: 
+                            { 
+                                stateAnimeList: AnimeProps[];
+                                setAnimeList: Dispatch<SetStateAction<AnimeProps[]>>;
+                                currUser: UserProps | null;
+                            }){
 
     const [showAddForm, setShowAddForm] = useState(false);
     const [showRemoveForm, setShowRemoveForm] = useState(false);
@@ -37,6 +40,7 @@ export default function Shows(
                 showRemoveForm={showRemoveForm}
                 showUpdateForm={showUpdateForm}
                 showChart={showChart}
+                currUser = {currUser}
             />            
         </div>
     );

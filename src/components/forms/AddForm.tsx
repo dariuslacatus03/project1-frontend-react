@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import AnimeService from "../../service/AnimeService";
 import { AnimeProps } from "../model/Anime";
+import { UserProps } from "../model/User";
 
 
 export default function AddForm({
@@ -11,7 +12,8 @@ export default function AddForm({
                                     stateAnimeList,
                                     setAnimeList,
                                     setShowAddForm,
-                                    toBeCompletedAnime
+                                    toBeCompletedAnime,
+                                    currUser
                                 }:{
                                     errorMessage : string,
                                     setErrorMessage : React.Dispatch<React.SetStateAction<string>>,
@@ -20,7 +22,8 @@ export default function AddForm({
                                     stateAnimeList : AnimeProps[],
                                     setAnimeList : React.Dispatch<React.SetStateAction<AnimeProps[]>>,
                                     setShowAddForm : React.Dispatch<React.SetStateAction<boolean>>,
-                                    toBeCompletedAnime : AnimeProps
+                                    toBeCompletedAnime : AnimeProps,
+                                    currUser: UserProps | null
                                 }
 ){
 
@@ -29,6 +32,9 @@ export default function AddForm({
           setErrorMessage('Please provide all the required information');
           return;
         }
+        if (currUser == null)
+            return;
+        newAnime.user = currUser
         AnimeService.addAnime(newAnime).then(() => {
           AnimeService.getAnimes().then((data) => {
             setAnimeList(data)

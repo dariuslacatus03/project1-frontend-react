@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AnimeService from "../../service/AnimeService";
 import { AnimeProps } from "../model/Anime";
@@ -29,8 +30,34 @@ export default function UpdateForm(
     const idString = params.id;
     const id = idString ? parseInt(idString, 10) : undefined;
 
-    const chosenAnime = stateAnimeList.find(anime => anime.id === id) 
-    ? stateAnimeList.find(anime => anime.id === id) : undefined;
+    // const chosenAnime = stateAnimeList.find(anime => anime.id === id) 
+    // ? stateAnimeList.find(anime => anime.id === id) : undefined;
+    const [chosenAnime, setChosenAnime] = useState<AnimeProps | null>(null);
+
+    useEffect(() => {
+      if (id !== undefined) {
+        AnimeService.getAnimeById(id)
+          .then((data) => {
+            setChosenAnime(data);
+          })
+          .catch((error) => {
+            console.error("Error fetching anime by ID:", error);
+          });
+      }
+    }, [id]);
+  
+
+    // if (id == undefined)
+    //   return;
+
+    // let chosenAnime : AnimeProps;
+
+    // AnimeService.getAnimeById(id).then((data) => {
+    // chosenAnime = data;
+    // })
+    // .catch((error) => {
+    //   console.error("Error fetching anime by ID:", error);
+    // });
 
     const handleUpdateSendClick = () => {
         if (!chosenAnime)

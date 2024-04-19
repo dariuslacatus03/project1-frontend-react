@@ -42,6 +42,7 @@ function AnimeDescription(
         nrOfEpisodes={detailedAnime.nrOfEpisodes}
         genre={detailedAnime.genre}
         description={detailedAnime.description}
+        user={detailedAnime.user}
       />
     </div>
   );
