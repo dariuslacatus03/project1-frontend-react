@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Buttons } from './Buttons';
 import GenreChart from './charts/GenreChart';
 import AddForm from './forms/AddForm';
@@ -49,6 +49,16 @@ export default function ButtonActions(
   const [newAnime, setNewAnime] = useState<AnimeProps>(toBeCompletedAnime);
   const [errorMessage, setErrorMessage] = useState('');
   const [ascending, setAscending] = useState(true);
+  const [nbOfPostedShows, setNbOfPostedShows] = useState(0);
+
+  useEffect(() => {
+    if (currUser) {
+      const userPostedShows = stateAnimeList.filter(
+        (anime) => anime.user.id === currUser.id
+      );
+      setNbOfPostedShows(userPostedShows.length);
+    }
+  }, [stateAnimeList, currUser]);
 
 
   const handleAddClick = () => {
@@ -126,6 +136,9 @@ export default function ButtonActions(
             stateAnimeList={stateAnimeList}
           />
       )}
+      <div className="postedShowsCount">
+        {currUser ? `This user posted ${nbOfPostedShows} shows` : ''}
+      </div>
     </div>
   );
 }

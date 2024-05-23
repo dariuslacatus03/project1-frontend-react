@@ -62,3 +62,8 @@
     border-style: none;
 
 }
+
+.postedShowsCount {
+    position: fixed;
+    bottom: 20px;
+}

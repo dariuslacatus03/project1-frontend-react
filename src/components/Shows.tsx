@@ -1,18 +1,22 @@
+import { Button } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
 import ButtonActions from './ButtonActions';
 import { AnimeProps } from './model/Anime';
 import AnimeList from './model/AnimeList';
 import { UserProps } from './model/User';
+
 export default function Shows(
                             {
                                 stateAnimeList,
                                 setAnimeList,
-                                currUser
+                                currUser,
+                                setAuthenticated
                             }: 
                             { 
                                 stateAnimeList: AnimeProps[];
                                 setAnimeList: Dispatch<SetStateAction<AnimeProps[]>>;
                                 currUser: UserProps | null;
+                                setAuthenticated: Dispatch<SetStateAction<boolean>>;
                             }){
 
     const [showAddForm, setShowAddForm] = useState(false);
@@ -20,8 +24,14 @@ export default function Shows(
     const [showUpdateForm, setShowUpdateForm] = useState(false);
     const [showChart, setShowChart] = useState(false);
 
+    const handleLogOutButton = () => {
+        localStorage.clear();
+        setAuthenticated(false);
+    }
+
     return (
         <div style={{display: 'flex', width: '100%'}}>
+            <Button onClick={handleLogOutButton}>Log out</Button>
             <AnimeList 
                 stateAnimeList={stateAnimeList}
                 setShowAddForm={setShowAddForm}
